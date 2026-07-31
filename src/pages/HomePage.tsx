@@ -25,7 +25,7 @@ const HomePage: React.FC = () => {
           <div className="terminal-line cmd">$ whoami</div>
           <div className="terminal-line out">Sebastián Gómez</div>
           <div className="terminal-line cmd" style={{ marginTop: '8px' }}>$ ls skills/</div>
-          <div className="terminal-line out">Java, Spring Boot, React, TypeScript y PostgreSQL</div>
+          <div className="terminal-line out">Node.js, React, TypeScript y PostgreSQL</div>
           <div className="terminal-line cmd" style={{ marginTop: '8px' }}>$ cat about.md</div>
           <div className="terminal-line out">Desarrollador apasionado por construir</div>
           <div className="terminal-line out">aplicaciones web y aprender cada dia.</div>

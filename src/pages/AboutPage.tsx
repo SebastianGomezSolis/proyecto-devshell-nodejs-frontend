@@ -3,14 +3,12 @@ import GlobalBanner from '../components/GlobalBanner';
 
 const AboutPage: React.FC = () => {
   const techs = [
-    { name: 'Java 17', cat: 'Backend' },
-    { name: 'Spring Boot 3.4.5', cat: 'Backend' },
+    { name: 'Node.js', cat: 'Backend' },
     { name: 'PostgreSQL', cat: 'Database' },
     { name: 'React 19', cat: 'Frontend' },
     { name: 'TypeScript', cat: 'Frontend' },
     { name: 'JWT', cat: 'Security' },
     { name: 'BCrypt', cat: 'Security' },
-    { name: 'Maven', cat: 'Build' },
     { name: 'CSS3', cat: 'Frontend' },
     { name: 'REST API', cat: 'Backend' },
   ];
