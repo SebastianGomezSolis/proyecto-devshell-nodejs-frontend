@@ -51,8 +51,8 @@ const AboutPage: React.FC = () => {
         <div className="card-title">{'// Estadísticas del sistema'}</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
           {[
-            { label: 'versión', value: '1.0.0' },
-            { label: 'backend', value: 'Java Spring Boot' },
+            { label: 'versión', value: '2.0.2' },
+            { label: 'backend', value: 'Node.js' },
             { label: 'frontend', value: 'React + TypeScript' },
             { label: 'base de datos', value: 'PostgreSQL' },
           ].map((s, i) => (

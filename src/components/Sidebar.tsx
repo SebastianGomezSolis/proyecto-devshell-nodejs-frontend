@@ -99,7 +99,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sesion }) => {
 
       <div className="sidebar-footer">
         <div className="sidebar-footer-email">sebasjose13@gmail.com</div>
-        <div className="sidebar-footer-version">v1.0.0</div>
+        <div className="sidebar-footer-version">v2.0.2</div>
       </div>
     </aside>
   );
