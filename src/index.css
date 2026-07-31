@@ -786,33 +786,125 @@ button {
 
 @media (max-width: 768px) {
   .sidebar {
-    width: 50px;
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    flex-direction: row;
+    align-items: center;
+    overflow-x: auto;
+    border-right: none;
+    border-top: 1px solid var(--ds-border);
+    padding: 0 6px;
+    -webkit-overflow-scrolling: touch;
   }
-  .sidebar-nav-item span {
-    display: none;
-  }
-  .sidebar-logo {
-    font-size: 10px;
-    padding: 12px 8px;
-  }
-  .sidebar-nav-item {
-    padding: 7px 8px;
-    justify-content: center;
-  }
+
+  .sidebar-logo,
+  .sidebar-nav-section,
   .sidebar-footer {
     display: none;
   }
-  .main-area {
-    margin-left: 50px;
+
+  .sidebar-nav-item {
+    flex-shrink: 0;
+    flex-direction: row;
+    white-space: nowrap;
+    gap: 6px;
+    padding: 12px;
+    font-size: 11px;
+    border-left: none;
+    border-bottom: 2px solid transparent;
   }
+
+  .sidebar-nav-item:hover {
+    background: transparent;
+  }
+
+  .sidebar-nav-item.active {
+    background: transparent;
+    border-left: none;
+    border-bottom-color: var(--ds-amber);
+  }
+
+  .sidebar-nav-dot {
+    display: none;
+  }
+
+  .main-area {
+    margin-left: 0;
+    padding-bottom: 56px;
+  }
+
+  .header-prompt {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .content {
+    padding: 16px;
+  }
+
+  .page-title {
+    font-size: 18px;
+  }
+
+  .login-box {
+    width: min(360px, calc(100vw - 32px));
+  }
+
+  .table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .grid-2,
   .stagger-grid {
     grid-template-columns: 1fr;
   }
+
   .reading-progress {
-    left: 50px;
+    left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-nav-item {
+    padding: 12px 10px;
+    font-size: 10px;
+  }
+
+  .content {
+    padding: 12px;
+  }
+
+  .prompt-command,
+  .header-email {
+    display: none;
+  }
+
+  .stats-grid {
+    gap: 8px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+  }
+
+  .stat-card {
+    padding: 10px 12px;
+  }
+
+  .page-header {
+    margin-bottom: 14px;
+  }
+
+  .kanban-col {
+    min-width: 240px;
   }
 }

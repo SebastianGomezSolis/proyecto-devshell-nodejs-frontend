@@ -34,7 +34,7 @@ const Header: React.FC<HeaderProps> = ({ sesion }) => {
           {theme === 'dark' ? '☀' : '☾'}
         </button>
         {sesion && (
-          <span style={{ fontSize: '12px', color: 'var(--ds-subtle)' }}>
+          <span className="header-email" style={{ fontSize: '12px', color: 'var(--ds-subtle)' }}>
             {sesion.correo}
           </span>
         )}
