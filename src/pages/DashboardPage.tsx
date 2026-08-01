@@ -179,7 +179,7 @@ const DashboardPage: React.FC = () => {
           <div className="terminal-box">
             <div className="terminal-line cmd">$ whoami</div>
             <div className="terminal-line out">Sebastián Gómez</div>
-            <div className="terminal-line out">Java, Spring Boot, React, TypeScript y PostgreSQL</div>
+            <div className="terminal-line out">Node.js, React, TypeScript y PostgreSQL</div>
             <div className="terminal-line cmd" style={{ marginTop: '6px' }}>$ session --status</div>
             <div className="terminal-line ok">Active session · {sesion.correo} · role: {sesion.rol.toLowerCase()}</div>
           </div>

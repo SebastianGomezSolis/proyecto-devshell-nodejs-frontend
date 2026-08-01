@@ -22,7 +22,7 @@ const AboutPage: React.FC = () => {
         <div style={{ fontSize: '12px', color: '#a0a09a', lineHeight: 1.8 }}>
           <p style={{ marginBottom: '12px' }}>
             DevShell es un portafolio personal interactivo con diseño de una terminal.
-            Combina un backend robusto en Java Spring Boot con un frontend React TypeScript.
+            Combina un backend robusto en Node.js con un frontend React TypeScript.
           </p>
           <p style={{ marginBottom: '12px' }}>
             Incluye gestión completa de proyectos, blog, habilidades técnicas, experiencia,

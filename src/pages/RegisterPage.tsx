@@ -63,8 +63,8 @@ const RegisterPage: React.FC = () => {
                   ✓ Cuenta creada
                 </div>
                 <div style={{ fontSize: '12px', color: 'var(--ds-subtle)', marginBottom: '16px' }}>
-                  Te enviamos un correo para verificar tu cuenta.<br />
-                  Luego un administrador la activará.
+                  Tu cuenta fue creada. Un administrador la aprobará<br />
+                  antes de que puedas iniciar sesión.
                 </div>
                 <button className="btn-primary" onClick={() => navigate('/login')} style={{ padding: '8px 20px', fontSize: '12px' }}>
                   ir a iniciar sesión
