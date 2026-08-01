@@ -79,6 +79,8 @@ const DashboardPage: React.FC = () => {
   const [experiencia, setExperiencia] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const sesion = getSesion();
+  const esAdmin = sesion?.rol === 'ADMIN';
+  const metricasVisibles = esAdmin ? METRICAS : { logins: METRICAS.logins, visitas: METRICAS.visitas };
 
   const fetchData = useCallback(async () => {
     try {
@@ -88,7 +90,7 @@ const DashboardPage: React.FC = () => {
         sesion ? api.get<any>('/publico/posts?pagina=0&tam=3').catch(() => ({ content: [] })) : Promise.resolve({ content: [] }),
         api.get<any[]>('/publico/experiencia').catch(() => []),
         sesion ? api.get<DashboardData>('/admin/dashboard').catch(() => ({ proyectos: 0, posts: 0, skills: 0, mensajes: 0 })) : Promise.resolve({ proyectos: 0, posts: 0, skills: 0, mensajes: 0 }),
-        sesion ? api.get<DiaActividad[]>('/admin/actividad').catch(() => []) : Promise.resolve([]),
+        sesion ? api.get<DiaActividad[]>(esAdmin ? '/admin/actividad' : '/publico/actividad').catch(() => []) : Promise.resolve([]),
       ]);
       setProyectos(projs.slice(0, 3));
       setSkills(skls);
@@ -101,7 +103,7 @@ const DashboardPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [sesion]);
+  }, [sesion, esAdmin]);
 
   useEffect(() => {
     fetchData();
@@ -139,7 +141,7 @@ const DashboardPage: React.FC = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <div className="card-title" style={{ marginBottom: 0 }}>{'// Actividad (30 días)'}</div>
             <div style={{ display: 'flex', gap: '6px' }}>
-              {Object.entries(METRICAS).map(([key, m]) => (
+              {Object.entries(metricasVisibles).map(([key, m]) => (
                 <button
                   key={key}
                   className={metrica === key ? 'btn-primary' : 'btn-secondary'}
@@ -155,7 +157,7 @@ const DashboardPage: React.FC = () => {
             <MetricChart data={actividad} metric={metrica} />
           </div>
           <div style={{ display: 'flex', gap: '14px', marginTop: '8px', fontSize: '9px', color: 'var(--ds-comment)', flexWrap: 'wrap' }}>
-            {Object.entries(METRICAS).map(([key, m]) => (
+            {Object.entries(metricasVisibles).map(([key, m]) => (
               <span key={key} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <span style={{ width: '8px', height: '8px', background: m.color, display: 'inline-block' }}></span>
                 {m.label}
