@@ -65,19 +65,20 @@ const CVPage: React.FC = () => {
   const handleDescargarPdf = async () => {
     setDescargando(true);
     setMsgPdf(null);
+    const win = window.open('', '_blank');
     try {
       const blob = await api.blob('/admin/cv/pdf');
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'cv-devshell.pdf';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-      setMsgPdf({ tipo: 'ok', texto: 'CV descargado en PDF.' });
+      if (win) {
+        win.location.href = url;
+      } else {
+        window.open(url, '_blank');
+      }
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+      setMsgPdf({ tipo: 'ok', texto: 'CV abierto en una nueva pestaña. Desde el visor puedes descargarlo.' });
     } catch (err: unknown) {
-      setMsgPdf({ tipo: 'error', texto: err instanceof Error ? err.message : 'Error al descargar el CV' });
+      if (win) win.close();
+      setMsgPdf({ tipo: 'error', texto: err instanceof Error ? err.message : 'Error al generar el CV' });
     } finally {
       setDescargando(false);
     }
