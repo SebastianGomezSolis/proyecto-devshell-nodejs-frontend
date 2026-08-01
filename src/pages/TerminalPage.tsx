@@ -52,7 +52,7 @@ const TerminalPage: React.FC = () => {
         { type: 'out', text: '  │ contact     – info de contacto       │' },
         { type: 'out', text: '  │ help        – esta ayuda             │' },
         { type: 'out', text: '  │ clear       – limpiar terminal       │' },
-        { type: 'out', text: '  │ github      – stats de github        │' },
+        { type: 'out', text: '  └──────────────────────────────────────┘' },
         { type: 'out', text: '' },
       ]);
       return;
