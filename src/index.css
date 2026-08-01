@@ -356,13 +356,13 @@ button {
 }
 
 .stat-value {
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--ds-amber);
 }
 
 .stat-label {
-  font-size: 10px;
+  font-size: 9px;
   color: var(--ds-comment);
   margin-top: 2px;
 }

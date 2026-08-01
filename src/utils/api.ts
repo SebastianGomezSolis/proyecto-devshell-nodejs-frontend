@@ -93,4 +93,20 @@ export const api = {
   post: <T>(endpoint: string, body?: unknown) => request<T>(endpoint, { method: 'POST', body }),
   put: <T>(endpoint: string, body?: unknown) => request<T>(endpoint, { method: 'PUT', body }),
   del: <T>(endpoint: string) => request<T>(endpoint, { method: 'DELETE' }),
+  blob: async (endpoint: string): Promise<Blob> => {
+    const withToken = async (): Promise<Response> => {
+      const token = localStorage.getItem('token');
+      return fetch(`${API_BASE}${endpoint}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        credentials: 'include',
+      });
+    };
+    let response = await withToken();
+    if (response.status === 401) {
+      const newToken = await refreshAccessToken();
+      if (newToken) response = await withToken();
+    }
+    if (!response.ok) throw new Error('Error al descargar el archivo');
+    return response.blob();
+  },
 };

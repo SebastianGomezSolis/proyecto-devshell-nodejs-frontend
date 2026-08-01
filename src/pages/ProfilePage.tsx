@@ -20,7 +20,7 @@ const ProfilePage: React.FC = () => {
   const [perfil, setPerfil] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({
-    nombre: '', bio: '', titulo: '', localizacion: '', githubUrl: '', linkedinUrl: '', disponible: true,
+    nombre: '', apellidos: '', bio: '', localizacion: '', githubUrl: '', linkedinUrl: '', disponible: true,
   });
   const [clave, setClave] = useState({ claveActual: '', claveNueva: '', confirmar: '' });
   const [msg, setMsg] = useState<{ tipo: 'ok' | 'error'; texto: string } | null>(null);
@@ -34,8 +34,8 @@ const ProfilePage: React.FC = () => {
       if (data.administrador) {
         setForm({
           nombre: data.administrador.nombre || '',
+          apellidos: data.administrador.apellidos || '',
           bio: data.administrador.bio || '',
-          titulo: data.administrador.titulo || '',
           localizacion: data.administrador.localizacion || '',
           githubUrl: data.administrador.githubUrl || '',
           linkedinUrl: data.administrador.linkedinUrl || '',
@@ -136,8 +136,8 @@ const ProfilePage: React.FC = () => {
               <input value={form.nombre} onChange={e => setForm({ ...form, nombre: e.target.value })} />
             </div>
             <div className="form-group">
-              <label className="form-label">título</label>
-              <input value={form.titulo} onChange={e => setForm({ ...form, titulo: e.target.value })} />
+              <label className="form-label">apellidos</label>
+              <input value={form.apellidos} onChange={e => setForm({ ...form, apellidos: e.target.value })} />
             </div>
             <div className="form-group">
               <label className="form-label">localización</label>

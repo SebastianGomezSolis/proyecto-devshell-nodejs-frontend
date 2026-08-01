@@ -10,6 +10,8 @@ const CVPage: React.FC = () => {
     empresa: '', puesto: '', descripcion: '', fechaInicio: '', fechaFin: '', tipo: 'TRABAJO', url: ''
   });
   const [message, setMessage] = useState('');
+  const [descargando, setDescargando] = useState(false);
+  const [msgPdf, setMsgPdf] = useState<{ tipo: 'ok' | 'error'; texto: string } | null>(null);
 
   const fetchData = async () => {
     try {
@@ -60,14 +62,49 @@ const CVPage: React.FC = () => {
     }
   };
 
+  const handleDescargarPdf = async () => {
+    setDescargando(true);
+    setMsgPdf(null);
+    try {
+      const blob = await api.blob('/admin/cv/pdf');
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'cv-devshell.pdf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      setMsgPdf({ tipo: 'ok', texto: 'CV descargado en PDF.' });
+    } catch (err: unknown) {
+      setMsgPdf({ tipo: 'error', texto: err instanceof Error ? err.message : 'Error al descargar el CV' });
+    } finally {
+      setDescargando(false);
+    }
+  };
+
   if (loading) return <LoadingBlock />;
 
   return (
     <div className="page-enter">
-      <div className="page-header">
-        <div className="page-title">CV</div>
-        <div className="page-sub">{'// Administrar CV'}</div>
+      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', flexWrap: 'wrap' }}>
+        <div>
+          <div className="page-title">CV</div>
+          <div className="page-sub">{'// Administrar CV'}</div>
+        </div>
+        <button
+          className="btn-primary"
+          onClick={handleDescargarPdf}
+          disabled={descargando}
+          style={{ fontSize: '11px', padding: '6px 14px' }}
+        >
+          {descargando ? 'generando...' : '⬇ descargar CV en PDF'}
+        </button>
       </div>
+
+      {msgPdf && (
+        <div style={{ color: msgPdf.tipo === 'ok' ? 'var(--ds-green)' : 'var(--ds-red)', fontSize: '11px', marginBottom: '10px' }}>{msgPdf.texto}</div>
+      )}
 
       {message && (
         <div style={{ color: 'var(--ds-green)', fontSize: '11px', marginBottom: '10px' }}>{message}</div>

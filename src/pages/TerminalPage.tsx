@@ -7,17 +7,12 @@ interface Line {
   text: string;
 }
 
-const simeCommands = [
-  'whoami', 'about', 'ls projects', 'ls blog', 'ls experience', 'skills', 'stack',
-  'cv', 'contact', 'social', 'neofetch', 'pwd', 'date', 'help', 'clear',
-];
-
-const quickCommands = ['whoami', 'ls projects', 'skills', 'neofetch', 'cv', 'help', 'clear'];
+const simeCommands = ['whoami', 'ls projects', 'ls blog', 'skills', 'contact', 'help', 'clear'];
 
 const TerminalPage: React.FC = () => {
   const [lines, setLines] = useState<Line[]>([
     { type: 'out', text: '╔══════════════════════════════════════╗' },
-    { type: 'out', text: '║     DevShell Terminal v1.1.0         ║' },
+    { type: 'out', text: '║     DevShell Terminal v1.0.0         ║' },
     { type: 'out', text: '║  Type "help" for available commands  ║' },
     { type: 'out', text: '╚══════════════════════════════════════╝' },
   ]);
@@ -49,22 +44,16 @@ const TerminalPage: React.FC = () => {
       setLines(prev => [...prev,
         { type: 'out', text: '' },
         { type: 'ok', text: '  Comandos disponibles:' },
-        { type: 'out', text: '  ┌──────────────────────────────────────────────┐' },
-        { type: 'out', text: '  │ whoami      – información del desarrollador   │' },
-        { type: 'out', text: '  │ about       – biografía breve                 │' },
-        { type: 'out', text: '  │ ls projects – proyectos activos               │' },
-        { type: 'out', text: '  │ ls blog     – artículos publicados            │' },
-        { type: 'out', text: '  │ ls experience– experiencia y educación        │' },
-        { type: 'out', text: '  │ skills      – habilidades técnicas            │' },
-        { type: 'out', text: '  │ stack       – tecnologías del stack           │' },
-        { type: 'out', text: '  │ cv          – resumen curricular               │' },
-        { type: 'out', text: '  │ contact     – info de contacto                │' },
-        { type: 'out', text: '  │ social      – redes sociales                  │' },
-        { type: 'out', text: '  │ neofetch    – información del sistema         │' },
-        { type: 'out', text: '  │ pwd · date · echo <text>                      │' },
-        { type: 'out', text: '  │ help        – esta ayuda                      │' },
-        { type: 'out', text: '  │ clear       – limpiar terminal                │' },
-        { type: 'out', text: '  └──────────────────────────────────────────────┘' },
+        { type: 'out', text: '  ┌──────────────────────────────────────┐' },
+        { type: 'out', text: '  │ whoami      – info del desarrollador │' },
+        { type: 'out', text: '  │ ls projects – proyectos activos      │' },
+        { type: 'out', text: '  │ ls blog     – últimos posts          │' },
+        { type: 'out', text: '  │ skills      – habilidades técnicas   │' },
+        { type: 'out', text: '  │ contact     – info de contacto       │' },
+        { type: 'out', text: '  │ help        – esta ayuda             │' },
+        { type: 'out', text: '  │ clear       – limpiar terminal       │' },
+        { type: 'out', text: '  │ github      – stats de github        │' },
+        { type: 'out', text: '  └──────────────────────────────────────┘' },
         { type: 'out', text: '' },
       ]);
       return;
@@ -76,7 +65,7 @@ const TerminalPage: React.FC = () => {
       outputLines.forEach((line: string) => {
         let type: 'out' | 'ok' | 'error' = 'out';
         if (line.includes('not found')) type = 'error';
-        else if (line.includes('→') || line.includes('Email') || line.includes('@') || line.includes('GitHub')) type = 'ok';
+        else if (line.includes('Found') || line.includes('Email') || line.includes('→')) type = 'ok';
         setLines(prev => [...prev, { type, text: line }]);
       });
     } catch {
@@ -123,7 +112,7 @@ const TerminalPage: React.FC = () => {
       <div className="card" style={{ marginBottom: '16px' }}>
         <div className="card-title">{'// Controles'}</div>
         <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-          {quickCommands.map(cmd => (
+          {['whoami', 'ls projects', 'skills', 'help', 'clear'].map(cmd => (
             <button
               key={cmd}
               className="btn-secondary"

@@ -31,8 +31,8 @@ const MetricChart: React.FC<{ data: DiaActividad[]; metric: string }> = ({ data,
   const values = data.map(d => Number(d[metric as keyof DiaActividad]) || 0);
   const max = Math.max(...values, 1);
   const W = 560;
-  const H = 160;
-  const PAD = 24;
+  const H = 120;
+  const PAD = 22;
   const bw = (W - PAD * 2) / data.length;
   const color = METRICAS[metric]?.color || COLORES.AMBER;
 
@@ -52,17 +52,15 @@ const MetricChart: React.FC<{ data: DiaActividad[]; metric: string }> = ({ data,
           <g key={d.fecha}>
             <title>{`${d.fecha}: ${values[i]}`}</title>
             <rect x={x} y={y} width={bw * 0.5} height={Math.max(h, 2)} fill={color} rx="2" />
-            {i % 2 === 0 && (
-              <text
-                x={x + bw * 0.25}
-                y={H - PAD + 12}
-                fontSize="9"
-                fill={COLORES.COMMENT}
-                textAnchor="middle"
-              >
-                {new Date(`${d.fecha}T00:00:00`).getDate()}
-              </text>
-            )}
+            <text
+              x={x + bw * 0.25}
+              y={H - PAD + 11}
+              fontSize="7"
+              fill={COLORES.COMMENT}
+              textAnchor="middle"
+            >
+              {new Date(`${d.fecha}T00:00:00`).getDate()}
+            </text>
           </g>
         );
       })}
@@ -139,7 +137,7 @@ const DashboardPage: React.FC = () => {
       {actividad.length > 0 && (
         <div className="card" style={{ marginBottom: '12px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-            <div className="card-title" style={{ marginBottom: 0 }}>{'// Actividad (14 días)'}</div>
+            <div className="card-title" style={{ marginBottom: 0 }}>{'// Actividad (30 días)'}</div>
             <div style={{ display: 'flex', gap: '6px' }}>
               {Object.entries(METRICAS).map(([key, m]) => (
                 <button
