@@ -111,6 +111,16 @@ const MisContenidoPage: React.FC = () => {
     }
   };
 
+  const handleReenviar = async (id: number) => {
+    if (!window.confirm('¿Enviar este elemento nuevamente para aprobación del administrador?')) return;
+    try {
+      await api.post(`/mis/${activeTab}/${id}/reenviar`);
+      fetchData();
+    } catch {
+      // fallback
+    }
+  };
+
   const tabLabel: Record<Tab, { singular: string; article: string }> = {
     proyectos: { singular: 'proyecto', article: 'nuevo' },
     posts: { singular: 'post', article: 'nuevo' },
@@ -153,12 +163,21 @@ const MisContenidoPage: React.FC = () => {
             <div style={{ fontSize: '11px', color: 'var(--ds-comment)' }}>No tienes proyectos aún.</div>
           )}
           {activeTab === 'proyectos' && proyectos.map((p: any) => (
-            <div key={p.id} className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
+            <div key={p.id} className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
+              <div style={{ flex: 1 }}>
                 <div style={{ fontSize: '12px', color: 'var(--ds-amber)' }}>{p.titulo}</div>
-                <div style={{ fontSize: '10px', color: 'var(--ds-comment)', marginTop: '2px' }}>{p.slug} · {p.categoria}</div>
+                <div style={{ fontSize: '10px', color: 'var(--ds-comment)', marginTop: '2px' }}>
+                  <span style={{ color: p.activo ? 'var(--ds-green)' : 'var(--ds-amber-dim)' }}>
+                    {p.activo ? 'publicado' : 'pendiente de aprobación'}
+                  </span>
+                  · {p.slug} · {p.categoria}
+                </div>
               </div>
-              <div style={{ display: 'flex', gap: '4px' }}>
+              <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                {!p.activo && (
+                  <button className="btn-primary" onClick={() => handleReenviar(p.id)}
+                    style={{ fontSize: '9px', padding: '2px 6px' }}>reenviar a aprobación</button>
+                )}
                 <button className="btn-secondary" onClick={() => openEdit(p)}
                   style={{ fontSize: '9px', padding: '2px 6px' }}>editar</button>
                 <button className="btn-secondary" onClick={() => handleDelete(p.id)}
@@ -171,8 +190,8 @@ const MisContenidoPage: React.FC = () => {
             <div style={{ fontSize: '11px', color: 'var(--ds-comment)' }}>No tienes posts aún.</div>
           )}
           {activeTab === 'posts' && posts.map((post: any) => (
-            <div key={post.id} className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
+            <div key={post.id} className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
+              <div style={{ flex: 1 }}>
                 <div style={{ fontSize: '12px', color: 'var(--ds-amber)' }}>{post.titulo}</div>
                 <div style={{ fontSize: '10px', color: 'var(--ds-comment)', marginTop: '2px' }}>
                   <span style={{ color: post.estado === 'PUBLICADO' ? 'var(--ds-green)' : 'var(--ds-amber-dim)' }}>
@@ -181,7 +200,11 @@ const MisContenidoPage: React.FC = () => {
                   · {post.vistas} vistas · {post.tiempoLectura} min
                 </div>
               </div>
-              <div style={{ display: 'flex', gap: '4px' }}>
+              <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                {post.estado !== 'PUBLICADO' && (
+                  <button className="btn-primary" onClick={() => handleReenviar(post.id)}
+                    style={{ fontSize: '9px', padding: '2px 6px' }}>reenviar a aprobación</button>
+                )}
                 <button className="btn-secondary" onClick={() => openEdit(post)}
                   style={{ fontSize: '9px', padding: '2px 6px' }}>editar</button>
                 <button className="btn-secondary" onClick={() => handleDelete(post.id)}

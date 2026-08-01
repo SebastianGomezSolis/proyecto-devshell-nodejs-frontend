@@ -79,6 +79,32 @@ const BlogDetailPage: React.FC = () => {
           {post.contenido}
         </div>
       </div>
+
+      {post.relacionados?.length > 0 && (
+        <div className="card" style={{ marginTop: '16px' }}>
+          <div className="card-title">{'// Artículos relacionados'}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {post.relacionados.map((rel: any) => (
+              <div
+                key={rel.id}
+                className="project-item"
+                style={{ cursor: 'pointer' }}
+                onClick={() => navigate(`/blog/${rel.slug}`)}
+              >
+                <div className="project-dot" style={{ background: rel.categoria?.color || 'var(--ds-amber)' }}></div>
+                <div style={{ flex: 1 }}>
+                  <div className="project-name" style={{ fontSize: '11px' }}>{rel.titulo}</div>
+                  <div className="project-tech">
+                    {formatFecha(rel.publicadoEn)}
+                    <span style={{ margin: '0 6px' }}>·</span>
+                    {rel.tiempoLectura} min de lectura
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
     </>
   );

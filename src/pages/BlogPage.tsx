@@ -9,9 +9,11 @@ const BlogPage: React.FC = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<any[]>([]);
   const [categorias, setCategorias] = useState<any[]>([]);
+  const [tags, setTags] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [busqueda, setBusqueda] = useState('');
   const [categoriaFiltro, setCategoriaFiltro] = useState('');
+  const [tagFiltro, setTagFiltro] = useState('');
   const [pagina, setPagina] = useState(0);
   const [totalPaginas, setTotalPaginas] = useState(0);
   const [totalElementos, setTotalElementos] = useState(0);
@@ -22,6 +24,7 @@ const BlogPage: React.FC = () => {
       const params = new URLSearchParams({ pagina: String(pagina), tam: '10' });
       if (busqueda) params.append('busqueda', busqueda);
       if (categoriaFiltro) params.append('categoria', categoriaFiltro);
+      if (tagFiltro) params.append('tag', tagFiltro);
       const data = await api.get<any>(`/publico/posts?${params}`);
       setPosts(data.content || []);
       setTotalPaginas(data.totalPages || 0);
@@ -33,18 +36,23 @@ const BlogPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [pagina, busqueda, categoriaFiltro]);
+  }, [pagina, busqueda, categoriaFiltro, tagFiltro]);
 
   useEffect(() => {
-    const fetchCategorias = async () => {
+    const fetchFiltros = async () => {
       try {
-        const data = await api.get<any[]>('/publico/categorias');
-        setCategorias(data);
+        const [cats, tgs] = await Promise.all([
+          api.get<any[]>('/publico/categorias').catch(() => []),
+          api.get<any[]>('/publico/tags').catch(() => []),
+        ]);
+        setCategorias(cats);
+        setTags(tgs);
       } catch {
         setCategorias([]);
+        setTags([]);
       }
     };
-    fetchCategorias();
+    fetchFiltros();
   }, []);
 
   useEffect(() => {
@@ -80,7 +88,26 @@ const BlogPage: React.FC = () => {
             <option key={c.id} value={c.slug}>{c.nombre}</option>
           ))}
         </select>
+        <select
+          value={tagFiltro}
+          onChange={(e) => { setTagFiltro(e.target.value); setPagina(0); }}
+          style={{ maxWidth: '200px', fontSize: '12px' }}
+        >
+          <option value="">Todos los tags</option>
+          {tags.map((t: any) => (
+            <option key={t.id} value={t.slug}>{t.nombre}</option>
+          ))}
+        </select>
       </div>
+
+      {tagFiltro && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px', fontSize: '11px', color: 'var(--ds-comment)' }}>
+          filtrando por tag <span className="tag">{tags.find(t => t.slug === tagFiltro)?.nombre || tagFiltro}</span>
+          <button className="btn-secondary" onClick={() => setTagFiltro('')} style={{ fontSize: '9px', padding: '2px 8px' }}>
+            quitar filtro
+          </button>
+        </div>
+      )}
 
       {loading ? (
         <LoadingBlock />
