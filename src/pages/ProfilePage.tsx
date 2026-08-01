@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getSesion } from '../utils/auth';
+import { useNavigate } from 'react-router-dom';
+import { getSesion, logout } from '../utils/auth';
 import GlobalBanner from '../components/GlobalBanner';
 import LoadingBlock from '../components/LoadingBlock';
 import SEO from '../components/SEO';
@@ -15,6 +16,7 @@ interface HistorialItem {
 
 const ProfilePage: React.FC = () => {
   const sesion = getSesion();
+  const navigate = useNavigate();
   const [perfil, setPerfil] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({
@@ -80,6 +82,8 @@ const ProfilePage: React.FC = () => {
       });
       setMsgClave({ tipo: 'ok', texto: res.message || 'Clave actualizada.' });
       setClave({ claveActual: '', claveNueva: '', confirmar: '' });
+      logout();
+      navigate('/login');
     } catch (err: unknown) {
       setMsgClave({ tipo: 'error', texto: err instanceof Error ? err.message : 'Error al cambiar la clave' });
     }
