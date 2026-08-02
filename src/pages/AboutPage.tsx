@@ -36,6 +36,24 @@ const AboutPage: React.FC = () => {
       </div>
 
       <div className="card">
+        <div className="card-title">{'// Creador'}</div>
+        <div style={{ fontSize: '12px', color: '#a0a09a', lineHeight: 1.8 }}>
+          <p style={{ marginBottom: '12px' }}>
+            DevShell fue creado por <span style={{ color: '#f59e0b', fontWeight: 500 }}>Sebastián José Gómez Solís</span>,
+            desarrollador full-stack. Puedes ver mi trabajo y conectar conmigo aquí:
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <a className="btn-primary" href="https://github.com/SebastianGomezSolis" target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', padding: '6px 16px' }}>
+            GitHub
+          </a>
+          <a className="btn-secondary" href="https://www.linkedin.com/in/sebasti%C3%A1n-jos%C3%A9-g%C3%B3mez-sol%C3%ADs-86203037b/" target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', padding: '6px 16px' }}>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <div className="card">
         <div className="card-title">{'// Stack tecnológico'}</div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
           {techs.map((t, i) => (
