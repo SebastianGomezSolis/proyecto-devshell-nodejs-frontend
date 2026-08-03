@@ -39,8 +39,8 @@ const AboutPage: React.FC = () => {
         <div className="card-title">{'// Creador'}</div>
         <div style={{ fontSize: '12px', color: '#a0a09a', lineHeight: 1.8 }}>
           <p style={{ marginBottom: '12px' }}>
-            DevShell fue creado por <span style={{ color: '#f59e0b', fontWeight: 500 }}>Sebastián José Gómez Solís</span>,
-            desarrollador full-stack. Puedes ver mi trabajo y conectar conmigo aquí:
+            DevShell fue creado y desarrollado por <span style={{ color: '#f59e0b', fontWeight: 500 }}>Sebastián José Gómez Solís</span>.
+            Puedes ver mi trabajo y conectar conmigo aquí:
           </p>
         </div>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
